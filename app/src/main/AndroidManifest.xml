@@ -19,19 +19,13 @@
             android:name="BUITIENDUNG.MyResult"
             android:exported="false" />
         <activity
-            android:name=".MyAdapteResult"
-            android:exported="false" />
-        <activity
             android:name="BUITIENDUNG.Result"
             android:exported="false" />
         <activity
-            android:name=".ConsultantDetail1"
+            android:name="LEMINHKHOI.ConsultantDetail"
             android:exported="false" />
         <activity
             android:name="LEMINHKHOI.ConsultantContact"
-            android:exported="false" />
-        <activity
-            android:name="LEMINHKHOI.ConsultantDetail"
             android:exported="false" />
         <activity
             android:name="VUMINHQUAN.SuggestedSsubjects"
