@@ -28,7 +28,7 @@
             android:name="LEMINHKHOI.ConsultantContact"
             android:exported="false" />
         <activity
-            android:name="VUMINHQUAN.SuggestedSsubjects"
+            android:name="VUMINHQUAN.SuggestedSubjects"
             android:exported="false" />
         <activity
             android:name="VUMINHQUAN.StudyPlan"

@@ -14,15 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.anassert.SINHVIEN.SinhVienDAO;
+import com.example.anassert.SINHVIEN.SinhVienObject;
+
 import BUITIENDUNG.Result;
 import LEMINHKHOI.Message;
 import PHAHUUHIEU.ReportingAdvisor;
 import VUMINHQUAN.StudyPlan;
-import VUMINHQUAN.SuggestedSsubjects;
+import VUMINHQUAN.SuggestedSubjects;
 import VUXUANDIEP.Document;
 import VUXUANDIEP.Timetable;
 
 public class MainActivity extends AppCompatActivity {
+    SinhVienDAO sinhVienDAO;
+    SinhVienObject getSV;
     ImageView back,imageTimetable,imageDocument,imageMessage,imageResult, btnReport,btnChat, btnEvaluate;
     Button btnPair,btnTest,btnStudyplane,btnSugsub,btnLater1,btnLater2,btnLater3,btnLater4;
     ConstraintLayout logo,logo1;
@@ -31,9 +36,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         String username = getIntent().getStringExtra("hoTen");
         String role = getIntent().getStringExtra("role");
+        int IDTK = Integer.parseInt(getIntent().getStringExtra("IDTK"));
+
         super.onCreate(savedInstanceState);
         if(role.equals("student")){
             setContentView(R.layout.activity_main_student);
+            sinhVienDAO = new SinhVienDAO(this);
+            getSV = sinhVienDAO.getSV(IDTK);
             getWidgetStudent();
             appStudent();
         }
@@ -136,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentStudyplane = new Intent(MainActivity.this, StudyPlan.class);
+                intentStudyplane.putExtra("IDSV",getSV.getID()+"");
                 startActivity(intentStudyplane);
             }
 
@@ -143,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
         btnSugsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentSugsub = new Intent(MainActivity.this, SuggestedSsubjects.class);
+                Intent intentSugsub = new Intent(MainActivity.this, SuggestedSubjects.class);
+                intentSugsub.putExtra("IDSV",getSV.getID()+"");
                 startActivity(intentSugsub);
             }
         });

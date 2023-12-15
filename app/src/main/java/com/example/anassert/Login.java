@@ -48,6 +48,7 @@ public class Login extends AppCompatActivity {
                     if(user != null){
                         Toast.makeText(Login.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                         Intent intentMain =  new Intent(Login.this,MainActivity.class);
+                        intentMain.putExtra("IDTK",user.getID()+"");
                         intentMain.putExtra("hoTen",user.getHoTen());
                         intentMain.putExtra("role",user.getRole());
                         intentMain.putExtra("taiKhoan",user.getTaiKhoan());

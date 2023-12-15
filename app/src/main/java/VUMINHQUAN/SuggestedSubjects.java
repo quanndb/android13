@@ -1,5 +1,6 @@
 package VUMINHQUAN;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,17 +22,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.anassert.ChiTietKH.ChiTietKHDAO;
+import com.example.anassert.ChiTietKH.ChiTietKHObject;
 import com.example.anassert.HOCPHAN.HocPhanDAO;
 import com.example.anassert.HOCPHAN.HocPhanObject;
+import com.example.anassert.KEHOACH.KeHoachDAO;
 import com.example.anassert.R;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-import BUITIENDUNG.MyAdapterResult;
-import BUITIENDUNG.Result;
-import PHAHUUHIEU.ReportingAdvisor;
-
-public class SuggestedSsubjects extends AppCompatActivity {
+public class SuggestedSubjects extends AppCompatActivity {
+    int IDSV, IDKH;
     private final String hk[]= {"1","2","3","4","5","6","7","8"};
     private final String TARGET[] = {"AI & BIGDATA","GAME", "WEB JAVA","WEB PHP","WEB .NET","MOBILE","IOT"};
     public ArrayList<HocPhanObject> mh1,mh2,mh3,mh4,mh5,mh6,mh7,mh8;
@@ -42,6 +45,8 @@ public class SuggestedSsubjects extends AppCompatActivity {
     TextView txtTarget;
     ListView lv;
     HocPhanDAO hocPhanDAO;
+    ChiTietKHDAO chiTietKHDAO;
+    KeHoachDAO keHoachDAO;
     ArrayList<HocPhanObject> listHP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +68,13 @@ public class SuggestedSsubjects extends AppCompatActivity {
         mh8 = new ArrayList<>();
 
         hocPhanDAO = new HocPhanDAO(this);
+        keHoachDAO = new KeHoachDAO(this);
+        chiTietKHDAO = new ChiTietKHDAO(this);
 
         spAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,hk);
         targetAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,TARGET);
+        IDSV = Integer.parseInt(getIntent().getStringExtra("IDSV"));
+        IDKH = keHoachDAO.getKH(IDSV).getID();
     }
 
     private void app() {
@@ -84,15 +93,63 @@ public class SuggestedSsubjects extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh1);
+                lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh1);
                 lv.setAdapter(lvAdapter);
             }
         });
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // Tạo một Builder để xây dựng AlertDialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(SuggestedSubjects.this);
+                builder.setTitle("Thông tin của học phần");
+
+                // Inflate layout tùy chỉnh cho AlertDialog
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.customdetail, null);
+                builder.setView(dialogView);
+                TextView txtMaHP, txtTenHP, txtSoTin, txtLoaiHP, txtHocKy;
+                txtMaHP = dialogView.findViewById(R.id.textViewDisplayMaHocPhan);
+                txtTenHP = dialogView.findViewById(R.id.textViewDisplayTenHocPhan);
+                txtSoTin = dialogView.findViewById(R.id.textViewDisplaySoTinChi);
+                txtLoaiHP = dialogView.findViewById(R.id.textViewDisplayLoaiHocPhan);
+                txtHocKy = dialogView.findViewById(R.id.textViewDisplayHocKy);
+                HocPhanObject selectedSubject = null;
+                if(sp.getSelectedItemPosition()==0) selectedSubject = mh1.get(position);
+                if(sp.getSelectedItemPosition()==1) selectedSubject = mh2.get(position);
+                if(sp.getSelectedItemPosition()==2) selectedSubject = mh3.get(position);
+                if(sp.getSelectedItemPosition()==3) selectedSubject = mh4.get(position);
+                if(sp.getSelectedItemPosition()==4) selectedSubject = mh5.get(position);
+                if(sp.getSelectedItemPosition()==5) selectedSubject = mh6.get(position);
+                if(sp.getSelectedItemPosition()==6) selectedSubject = mh7.get(position);
+                if(sp.getSelectedItemPosition()==7) selectedSubject = mh8.get(position);
+                txtMaHP.setText(selectedSubject.getMaHP());
+                txtTenHP.setText(selectedSubject.getTenHP());
+                txtSoTin.setText(selectedSubject.getSoTin()+"");
+                txtLoaiHP.setText(selectedSubject.getLoaiHP());
+                txtHocKy.setText(selectedSubject.getHocKy()+"");
+                // Thiết lập nút "OK"
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                       dialog.cancel();
+                    }
+                });
+                // Tạo và hiển thị AlertDialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                return false;
+            }
+        });
+
         btnUse.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                Toast.makeText(SuggestedSsubjects.this, "Cập nhật kế hoạch thành công", Toast.LENGTH_SHORT).show();
+                setKH();
+                Toast.makeText(SuggestedSubjects.this, "Cập nhật kế hoạch thành công", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -101,7 +158,7 @@ public class SuggestedSsubjects extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Tạo một Builder để xây dựng AlertDialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(SuggestedSsubjects.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SuggestedSubjects.this);
                 builder.setTitle("Nhập mục tiêu nghề nghiệp");
 
                 // Inflate layout tùy chỉnh cho AlertDialog
@@ -115,7 +172,7 @@ public class SuggestedSsubjects extends AppCompatActivity {
 
                 // Thiết lập nút "OK"
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
+
                     public void onClick(DialogInterface dialog, int which) {
                         // Xử lý dữ liệu được nhập ở đây
                         String userInput = spTarget.getSelectedItem().toString();
@@ -123,7 +180,7 @@ public class SuggestedSsubjects extends AppCompatActivity {
                         changeMH(spTarget.getSelectedItemPosition()+1);
 
                         // Thực hiện các thao tác khác với dữ liệu nhập
-                        Toast.makeText(SuggestedSsubjects.this, "Cập nhật thông tin thành công "+userInput, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SuggestedSubjects.this, "Cập nhật thông tin thành công "+userInput, Toast.LENGTH_SHORT).show();
                     }
                 });
                 // Thiết lập nút "Cancel"
@@ -139,6 +196,45 @@ public class SuggestedSsubjects extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setKH() {
+        chiTietKHDAO.delete(IDKH);
+        // Lấy ngày hiện tại
+        LocalDate currentDate = LocalDate.now();
+
+        for(HocPhanObject item : mh1){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+        for(HocPhanObject item : mh2){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+        for(HocPhanObject item : mh3){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+        for(HocPhanObject item : mh4){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+        for(HocPhanObject item : mh5){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+        for(HocPhanObject item : mh6){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+        for(HocPhanObject item : mh7){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+        for(HocPhanObject item : mh8){
+            ChiTietKHObject newOne = new ChiTietKHObject(currentDate+"",IDKH,item.getID());
+            chiTietKHDAO.insert(newOne);
+        }
+    }
     private void changeMH(int input){
         // Duyệt qua ArrayList bằng vòng lặp for-each
         mh1.clear();
@@ -195,14 +291,14 @@ public class SuggestedSsubjects extends AppCompatActivity {
     }
 
     private void changeLV(int position){
-        if(position==0) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh1);
-        if(position==1) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh2);
-        if(position==2) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh3);
-        if(position==3) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh4);
-        if(position==4) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh5);
-        if(position==5) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh6);
-        if(position==6) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh7);
-        if(position==7) lvAdapter = new MyAdapterSGS(SuggestedSsubjects.this,R.layout.customlvsgs,mh8);
+        if(position==0) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh1);
+        if(position==1) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh2);
+        if(position==2) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh3);
+        if(position==3) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh4);
+        if(position==4) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh5);
+        if(position==5) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh6);
+        if(position==6) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh7);
+        if(position==7) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh8);
         lv.setAdapter(lvAdapter);
     }
 
