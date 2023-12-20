@@ -25,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
             createTableHocPhan(db);
             createTableKH(db);
             createTableChiTietKH(db);
+            createTableCVHT(db);
     }
 
     private void createTableKH(SQLiteDatabase db) {
@@ -97,6 +98,21 @@ public class DBHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY (IDKH) REFERENCES tblKH(ID),"+
                     "FOREIGN KEY (IDHP) REFERENCES tblHocPhan(ID));";
             db.execSQL(tblChiTietKH);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
+
+    //Bảng Cố vấn học tập
+    private void createTableCVHT(SQLiteDatabase db){
+        try{
+            String tblCVHT = "CREATE TABLE tblCVHT" +
+                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "FullName TEXT,"+
+                    "PhoneNumber TEXT,"+
+                    "Email TEXT)";
+            db.execSQL(tblCVHT);
         }
         catch (Exception e){
             Log.e("Error","There are some problems!");
