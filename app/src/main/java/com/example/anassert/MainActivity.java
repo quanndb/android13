@@ -67,7 +67,14 @@ public class MainActivity extends AppCompatActivity {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:"));
 
+                try {
+                    startActivity(emailIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    // Handle case where no email app is available
+                }
             }
         });
         btnReport.setOnClickListener(new View.OnClickListener() {

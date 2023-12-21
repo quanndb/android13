@@ -16,10 +16,8 @@ import com.example.anassert.CoVanHocTap.CoVanHocTapDAO;
 import com.example.anassert.CoVanHocTap.CoVanHocTapObject;
 import com.example.anassert.MainActivity;
 import com.example.anassert.R;
-
 import java.util.ArrayList;
 
-import PHAHUUHIEU.ReportingAdvisor;
 
 public class Message extends AppCompatActivity {
     Button btnSearch;

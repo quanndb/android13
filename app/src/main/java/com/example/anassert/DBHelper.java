@@ -26,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
             createTableKH(db);
             createTableChiTietKH(db);
             createTableCVHT(db);
+            createtblCVHT_HP(db);
     }
 
     private void createTableKH(SQLiteDatabase db) {
@@ -118,7 +119,18 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e("Error","There are some problems!");
         }
     }
-
+    private void createtblCVHT_HP(SQLiteDatabase db){
+        try{
+            String tblCvhtHp = "CREATE TABLE tblCvhtHp" +
+                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "CvhtID INTEGER,"+
+                    "HpId INTEGER);";
+            db.execSQL(tblCvhtHp);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

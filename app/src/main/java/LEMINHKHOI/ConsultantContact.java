@@ -3,7 +3,9 @@ package LEMINHKHOI;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +39,29 @@ public class ConsultantContact extends AppCompatActivity {
             if (data != null) {
                 txtEmail.setText(data.Email.toString());
             }
+        }
+
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail();
+            }
+        });
+    }
+
+    private void sendEmail() {
+        String[] TO = {data.Email};
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, txtTile.getText().toString());
+        emailIntent.putExtra(Intent.EXTRA_TEXT, txtDescription.getText().toString());
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Handle case where no email app is available
         }
     }
 }

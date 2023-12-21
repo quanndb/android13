@@ -75,4 +75,37 @@ public class CoVanHocTapDAO {
 
         return listCVHT;
     }
+
+
+    @SuppressLint("Range")
+    public ArrayList<HocPhanDto> getAllHP(int Id){
+        ArrayList<HocPhanDto> listHP = new ArrayList<>();
+        String ID = String.valueOf(Id);
+        // Câu truy vấn kiểm tra xem username có tồn tại không
+        String query = "SELECT tblHocPhan.maHP, tblHocPhan.tenHP, tblHocPhan.soTin FROM tblCvhtHp " +
+                "LEFT JOIN tblHocPhan on  tblCvhtHp.HpId = tblHocPhan.ID " +
+                "WHERE tblCvhtHp.CvhtID =" + ID ;
+
+        // Thực hiện truy vấn
+        Cursor cursor = db.rawQuery(query,null);
+
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                HocPhanDto Hp = new HocPhanDto();
+
+                Hp.MaHocPhan = cursor.getString(cursor.getColumnIndex("maHP"));
+                Hp.TenHocPhan = cursor.getString(cursor.getColumnIndex("tenHP"));
+                Hp.SoTinCHi = cursor.getDouble(cursor.getColumnIndex("soTin"));
+
+                listHP.add(Hp);
+                // Thực hiện xử lý với dữ liệu lấy được
+            } while (cursor.moveToNext());
+
+            // Đóng Cursor khi không sử dụng nữa
+            cursor.close();
+        }
+
+        return listHP;
+    }
 }

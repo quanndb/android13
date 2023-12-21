@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.anassert.CoVanHocTap.CoVanHocTapObject;
 import com.example.anassert.HOCPHAN.HocPhanObject;
 import com.example.anassert.R;
@@ -40,10 +42,12 @@ public class messageAdapter extends ArrayAdapter {
             TextView txtFullname = convertView.findViewById(R.id.txt_fullNameMessage);
             TextView txtEmail = convertView.findViewById(R.id.txt_emailMessage);
             TextView txtPhone = convertView.findViewById(R.id.txt_phoneNumberMessage);
+            ImageView imageView = convertView.findViewById(R.id.image_message);
 
-            txtFullname.setText(list.get(position).FullName.toString());
-            txtEmail.setText(list.get(position).Email.toString());
-            txtPhone.setText(list.get(position).PhoneNumber.toString());
+            String imageUrl = "";
+            txtFullname.setText(list.get(position).FullName);
+            txtEmail.setText(list.get(position).Email);
+            txtPhone.setText(list.get(position).PhoneNumber);
         }
         return convertView;
     }
