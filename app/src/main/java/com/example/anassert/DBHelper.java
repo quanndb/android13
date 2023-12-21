@@ -111,7 +111,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
                     "FullName TEXT,"+
                     "PhoneNumber TEXT,"+
-                    "Email TEXT)";
+                    "Email TEXT);";
             db.execSQL(tblCVHT);
         }
         catch (Exception e){

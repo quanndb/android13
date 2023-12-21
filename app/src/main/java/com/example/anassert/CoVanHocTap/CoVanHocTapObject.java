@@ -1,6 +1,8 @@
 package com.example.anassert.CoVanHocTap;
 
-public class CoVanHocTapObject {
+import java.io.Serializable;
+
+public class CoVanHocTapObject implements Serializable {
     public int ID;
     public String FullName;
     public String Email;

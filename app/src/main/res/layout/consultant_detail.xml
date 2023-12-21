@@ -8,7 +8,19 @@
     android:background="@drawable/background"
     android:padding="8dp"
     tools:context="LEMINHKHOI.ConsultantDetail">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/main1_button_background"
+        android:text="Cố vấn học tập"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:textAlignment="center"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,27 +42,30 @@
             android:layout_weight="2">
 
             <TextView
+                android:id="@+id/txt_fulleName_messageDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Ts. Nguyễn Văn A"
-                android:textSize="24dp"
+                android:text=""
+                android:textSize="22dp"
                 android:textAlignment="center"></TextView>
 
             <TextView
+                android:id="@+id/txt_phone_messageDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0392810344"
+                android:text=""
                 android:textSize="18dp"></TextView>
 
             <TextView
+                android:id="@+id/txt_email_messageDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="Email@gmail.edu.com"
+                android:text=""
                 android:textSize="18dp"></TextView>
             <Button
-                android:id="@+id/btnCall"
+                android:id="@+id/btn_contact_messageDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Liên hệ">
@@ -63,7 +78,8 @@
         android:orientation="vertical"
         android:layout_marginTop="12dp"
         android:background="@drawable/main1_button_background"
-        android:weightSum="3">
+        android:weightSum="3"
+        android:padding="2dp">
         <TextView
             android:layout_marginTop="8dp"
             android:layout_marginBottom="12dp"

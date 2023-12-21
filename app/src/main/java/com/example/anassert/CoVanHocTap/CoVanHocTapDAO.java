@@ -38,7 +38,6 @@ public class CoVanHocTapDAO {
         long res = db.update("tblCVHT", contentValues,"ID=?",new String[]{String.valueOf(id)});
         return res;
     }
-
     public long Delete(int Id){
         long res = db.delete("tblCVHT","ID=?",new String[]{String.valueOf(Id)});
         if(res == -1 ) return 0;
@@ -49,7 +48,9 @@ public class CoVanHocTapDAO {
     public ArrayList<CoVanHocTapObject> getAll(String request){
         ArrayList<CoVanHocTapObject> listCVHT = new ArrayList<>();
         // Câu truy vấn kiểm tra xem username có tồn tại không
-        String query = "SELECT * FROM tblCVHT WHERE FullName LIKE '%' || " + request + "|| '%'";
+        String query = "SELECT * FROM tblCVHT WHERE FullName LIKE '%' || '" + request + "'|| '%' " +
+                " or Email LIKE '%' || '"+ request + "'|| '%' " +
+                " or PhoneNumber LIKE '%' || '" + request + "'|| '%'";
 
         // Thực hiện truy vấn
         Cursor cursor = db.rawQuery(query,null);
