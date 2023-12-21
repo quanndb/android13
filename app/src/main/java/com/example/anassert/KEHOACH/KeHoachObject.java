@@ -2,8 +2,6 @@ package com.example.anassert.KEHOACH;
 
 public class KeHoachObject {
 
-    private int ID;
-
     private String updateDate;
     private int IDSV;
 
@@ -11,14 +9,6 @@ public class KeHoachObject {
         this.updateDate = updateDate;
         this.IDSV = IDSV;
     }
-
-    public KeHoachObject(int ID, String updateDate,int IDSV){
-        this.ID = ID;
-        this.updateDate = updateDate;
-        this.IDSV = IDSV;
-    }
-
-    public int getID(){return ID;}
 
     public String getUpdateDate() {
         return updateDate;

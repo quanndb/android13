@@ -17,60 +17,60 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp">
+                android:layout_height="500dp">
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="310dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/background1" />
-
+                    app:srcCompat="@drawable/backgroundmain" />
 
                 <ImageView
                     android:id="@+id/imageback"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="356dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/back" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="22dp"
+                    android:background="@drawable/back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
-                    android:id="@+id/imageSMS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="32dp"
+                    android:id="@+id/imageBell"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="22dp"
+                    android:background="@drawable/bell"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/bell" />
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
 
                 <ImageView
                     android:id="@+id/imageUser"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="40dp"
                     app:srcCompat="@drawable/user"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
                     android:background="@drawable/banner1_top_background"
-                    android:elevation="3dp"
+                    android:elevation="4dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -85,22 +85,23 @@
 
                         <TextView
                             android:id="@+id/textView3"
-                            android:layout_width="80dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Xin Chào Sinh Viên"
+                            android:text="Xin Chào "
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txtUsername"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textAllCaps="true"
                             android:text="Diep"
+                            android:textSize="20sp"
                             android:textAlignment="viewEnd"
                             android:textColor="#000000"
-                            android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -126,7 +127,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.25"
                             android:orientation="vertical">
-
                             <ImageView
                                 android:id="@+id/imageMessage"
                                 android:layout_width="match_parent"
@@ -218,118 +218,115 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.25"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/btnStudyplane"
+                                android:layout_width="match_parent"
+                                android:layout_height="59dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/studyplan"/>
+                            <TextView
+                                android:id="@+id/txtStudyplane"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Kế Hoạch \n Học Tập"
+                                android:textAlignment="center"
+                                android:textColor="#8d8d8d"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.25"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imgReport"
+                                android:layout_width="match_parent"
+                                android:layout_height="59dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/studywarning" />
+
+                            <TextView
+                                android:id="@+id/txtReport"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Cảnh báo "
+                                android:textAlignment="center"
+                                android:textColor="#8d8d8d"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.25"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/btnSuggestedsubjects"
+                                android:layout_width="match_parent"
+                                android:layout_height="59dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/suggested" />
+
+                            <TextView
+                                android:id="@+id/txtSuggestedsubjects"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Đề Xuất \nMôn Học"
+                                android:textAlignment="center"
+                                android:textColor="#8d8d8d"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.25"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imgAnother"
+                                android:layout_width="match_parent"
+                                android:layout_height="59dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/another" />
+
+                            <TextView
+                                android:id="@+id/txtAnother"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Khác"
+                                android:textAlignment="center"
+                                android:textColor="#8d8d8d"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="32dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="32dp"
-                android:paddingBottom="16dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnStudyplane"
-                        style="@android:style/Widget.Button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/main1_button_background"
-                        android:drawableStart="@drawable/btn_2"
-                        android:drawablePadding="5dp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:text="Kế hoạch học tập"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0059ff"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnPair"
-                        style="@android:style/Widget.Button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/main1_button_background"
-                        android:drawableStart="@drawable/btn_1"
-                        android:drawablePadding="5dp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:text="Thanh Toán Công Nợ"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0059ff"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnSuggestedsubjects"
-                        style="@android:style/Widget.Button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:paddingStart="16dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/main1_button_background"
-                        android:drawableStart="@drawable/btn_4"
-                        android:drawablePadding="5dp"
-                        android:paddingEnd="16dp"
-                        android:text="Đề xuất môn học"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0059ff"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnTest"
-                        style="@android:style/Widget.Button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="0.5"
-                        android:background="@drawable/main1_button_background"
-                        android:drawableStart="@drawable/btn_2"
-                        android:drawablePadding="5dp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:text="Theo dõi lịch Thi"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0059ff"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
-
-
-
-
-                </LinearLayout>
-            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

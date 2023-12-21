@@ -1,9 +1,7 @@
 package VUMINHQUAN;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import  androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,103 +10,34 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.anassert.ChiTietKH.ChiTietKHDAO;
-import com.example.anassert.HOCPHAN.HocPhanDAO;
-import com.example.anassert.HOCPHAN.HocPhanObject;
-import com.example.anassert.KEHOACH.KeHoachDAO;
-import com.example.anassert.KEHOACH.KeHoachObject;
 import com.example.anassert.R;
 import com.example.anassert.TAIKHOAN.TaiKhoanDAO;
 import com.example.anassert.TAIKHOAN.TaiKhoanObject;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class StudyPlan extends AppCompatActivity {
-    int IDSV;
     String hk[]= {"1","2","3","4","5","6","7","8"};
+    ArrayList<String> mh;
     ListView lv;
-    public static ArrayList<ArrayList<HocPhanObject>> listmh = null;
-    ArrayList<HocPhanObject> listHP;
     Spinner sp;
-    TextView txtUpdateDate;
     ArrayAdapter<String> lvAdapter;
     ArrayAdapter<String> spAdapter;
-
-    HocPhanDAO hocPhanDAO;
-    KeHoachDAO keHoachDAO;
-    KeHoachObject keHoachObject;
-    ChiTietKHDAO chiTietKHDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_studyplan);
         getWidget();
-        define();
         app();
+
     }
-
-    private void define() {
-        IDSV = Integer.parseInt(getIntent().getStringExtra("IDSV"));
-        hocPhanDAO = new HocPhanDAO(this);
-        keHoachDAO = new KeHoachDAO(this);
-        chiTietKHDAO = new ChiTietKHDAO(this);
-
-        spAdapter = new ArrayAdapter<>(StudyPlan.this, android.R.layout.simple_spinner_dropdown_item,hk);
-        sp.setAdapter(spAdapter);
-        getData();
-    }
-
-    private void getData(){
-        keHoachObject = keHoachDAO.getKH(IDSV);
-        txtUpdateDate.setText(keHoachObject.getUpdateDate());
-        if(keHoachObject != null){
-            listmh = new ArrayList<>();
-            txtUpdateDate.setText(keHoachObject.getUpdateDate());
-            listHP = hocPhanDAO.getKH(keHoachObject.getID());
-            ArrayList<HocPhanObject> mh1 = new ArrayList<>();
-            ArrayList<HocPhanObject> mh2 = new ArrayList<>();
-            ArrayList<HocPhanObject> mh3 = new ArrayList<>();
-            ArrayList<HocPhanObject> mh4 = new ArrayList<>();
-            ArrayList<HocPhanObject> mh5 = new ArrayList<>();
-            ArrayList<HocPhanObject> mh6 = new ArrayList<>();
-            ArrayList<HocPhanObject> mh7 = new ArrayList<>();
-            ArrayList<HocPhanObject> mh8 = new ArrayList<>();
-
-            for(HocPhanObject item : listHP){
-                if(item.getHocKy() == 1) mh1.add(item);
-                if(item.getHocKy() == 2) mh2.add(item);
-                if(item.getHocKy() == 3) mh3.add(item);
-                if(item.getHocKy() == 4) mh4.add(item);
-                if(item.getHocKy() == 5) mh5.add(item);
-                if(item.getHocKy() == 6) mh6.add(item);
-                if(item.getHocKy() == 7) mh7.add(item);
-                if(item.getHocKy() == 8) mh8.add(item);
-            }
-            listmh.add(mh1);
-            listmh.add(mh2);
-            listmh.add(mh3);
-            listmh.add(mh4);
-            listmh.add(mh5);
-            listmh.add(mh6);
-            listmh.add(mh7);
-            listmh.add(mh8);
-        }
-    }
-    private void setLV(int position){
-            lvAdapter = new MyAdapterSGS(StudyPlan.this,R.layout.customlvsgs,listmh.get(position));
-            lv.setAdapter(lvAdapter);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.submenu,menu);
@@ -128,64 +57,40 @@ public class StudyPlan extends AppCompatActivity {
     }
 
     private void app() {
-        if(listmh != null || listmh.size() != 0){
-
-            sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    setLV(position);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    setLV(0);
-                }
-            });
-            lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    AlertDialog.Builder Option = new AlertDialog.Builder(StudyPlan.this);
-                    Option.setTitle("Có muốn xóa môn học?");
-                    ArrayList<HocPhanObject> mh = listmh.get(sp.getSelectedItemPosition());
-                    Option.setMessage(mh.get(position).getTenHP().toString());
-                    Option.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int which) {
-                            Toast.makeText(StudyPlan.this, "Xóa thành công "+mh.get(position).getTenHP().toString(), Toast.LENGTH_SHORT).show();
-                            chiTietKHDAO.deleteSubject(keHoachObject.getID(),mh.get(position).getID());
-                            mh.remove(position);
-                            // Lấy ngày và giờ hiện tại
-                            LocalDate currentDate = LocalDate.now();
-                            KeHoachObject newKH = new KeHoachObject(currentDate+"",IDSV);
-                            keHoachDAO.update(keHoachObject.getID(), newKH);
-                            keHoachObject = keHoachDAO.getKH(IDSV);
-                            txtUpdateDate.setText(keHoachObject.getUpdateDate());
-
-                            dialogInterface.cancel();
-                            lvAdapter.notifyDataSetChanged();
-                        }
-                    });
-                    Option.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    });
-                    Option.create().show();
-                    return false;
-                }
-            });
-        }
-    }
-
-    private void dialog(){
-
+        spAdapter = new ArrayAdapter<>(StudyPlan.this, android.R.layout.simple_spinner_dropdown_item,hk);
+        sp.setAdapter(spAdapter);
+        mh = new ArrayList<>();
+        lvAdapter = new ArrayAdapter<>(StudyPlan.this, android.R.layout.simple_list_item_1,mh);
+        lv.setAdapter(lvAdapter);
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder Option = new AlertDialog.Builder(StudyPlan.this);
+                Option.setTitle("Có muốn xóa môn học?");
+                Option.setMessage(mh.get(position).toString());
+                Option.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        Toast.makeText(StudyPlan.this, "Xóa thành công "+mh.get(position), Toast.LENGTH_SHORT).show();
+                        mh.remove(position);
+                        dialogInterface.cancel();
+                        lvAdapter.notifyDataSetChanged();
+                    }
+                });
+                Option.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                Option.create().show();
+                return false;
+            }
+        });
     }
 
     private void getWidget() {
         lv = findViewById(R.id.lv);
         sp = findViewById(R.id.sp);
-        txtUpdateDate = findViewById(R.id.txtUpdateDate);
     }
 }

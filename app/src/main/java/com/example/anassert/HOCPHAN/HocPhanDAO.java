@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.anassert.DBHelper;
-import com.example.anassert.TAIKHOAN.TaiKhoanObject;
 
 import java.util.ArrayList;
 
@@ -65,49 +64,13 @@ public class HocPhanDAO {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 // Lấy dữ liệu từ cột cần thiết
-                int ID = cursor.getInt(cursor.getColumnIndex("ID"));
                 String maHP = cursor.getString(cursor.getColumnIndex("maHP"));
                 String tenHP = cursor.getString(cursor.getColumnIndex("tenHP"));
                 double soTin = cursor.getDouble(cursor.getColumnIndex("soTin"));
                 String loaiHP = cursor.getString(cursor.getColumnIndex("loaiHP"));
                 String tieuChi = cursor.getString(cursor.getColumnIndex("tieuChi"));
                 int hocKy = cursor.getInt(cursor.getColumnIndex("hocKy"));
-                HocPhanObject newHP = new HocPhanObject(ID,maHP,tenHP, (float) soTin,loaiHP,tieuChi,hocKy);
-                listHP.add(newHP);
-                // Thực hiện xử lý với dữ liệu lấy được
-            } while (cursor.moveToNext());
-
-            // Đóng Cursor khi không sử dụng nữa
-            cursor.close();
-        }
-
-        return listHP;
-    }
-
-
-    @SuppressLint("Range")
-    public ArrayList<HocPhanObject> getKH (int idkh){
-        ArrayList<HocPhanObject> listHP = new ArrayList<>();
-        // Câu truy vấn kiểm tra xem username có tồn tại không
-        String query = "SELECT tblHocPhan.ID,tblHocPhan.maHP,tblHocPhan.tenHP,tblHocPhan.soTin,tblHocPhan.loaiHP,tblHocPhan.tieuChi,tblHocPhan.hocKy FROM tblHocPhan JOIN tblChiTietKH ON tblHocPhan.ID = tblChiTietKH.IDHP "+
-                                                "JOIN tblKH ON tblChiTietKH.IDKH = tblKH.ID "+
-                        "WHERE tblChiTietKH.IDKH = ?;";
-        String selectionArgs[] = {idkh+""};
-        // Thực hiện truy vấn
-        Cursor cursor = db.rawQuery(query,selectionArgs);
-
-// Duyệt qua dữ liệu trong Cursor
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                // Lấy dữ liệu từ cột cần thiết
-                int ID = cursor.getInt(cursor.getColumnIndex("ID"));
-                String maHP = cursor.getString(cursor.getColumnIndex("maHP"));
-                String tenHP = cursor.getString(cursor.getColumnIndex("tenHP"));
-                double soTin = cursor.getDouble(cursor.getColumnIndex("soTin"));
-                String loaiHP = cursor.getString(cursor.getColumnIndex("loaiHP"));
-                String tieuChi = cursor.getString(cursor.getColumnIndex("tieuChi"));
-                int hocKy = cursor.getInt(cursor.getColumnIndex("hocKy"));
-                HocPhanObject newHP = new HocPhanObject(ID,maHP,tenHP, (float) soTin,loaiHP,tieuChi,hocKy);
+                HocPhanObject newHP = new HocPhanObject(maHP,tenHP, (float) soTin,loaiHP,tieuChi,hocKy);
                 listHP.add(newHP);
                 // Thực hiện xử lý với dữ liệu lấy được
             } while (cursor.moveToNext());

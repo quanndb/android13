@@ -1,48 +1,43 @@
 package com.example.anassert;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.anassert.SINHVIEN.SinhVienDAO;
-import com.example.anassert.SINHVIEN.SinhVienObject;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import BUITIENDUNG.Result;
 import LEMINHKHOI.Message;
 import PHAHUUHIEU.ReportingAdvisor;
 import VUMINHQUAN.StudyPlan;
-import VUMINHQUAN.SuggestedSubjects;
+import VUMINHQUAN.SuggestedSsubjects;
 import VUXUANDIEP.Document;
 import VUXUANDIEP.Timetable;
 
 public class MainActivity extends AppCompatActivity {
-    SinhVienDAO sinhVienDAO;
-    SinhVienObject getSV;
-    ImageView back,imageTimetable,imageDocument,imageMessage,imageResult, btnReport,btnChat, btnEvaluate;
-    Button btnPair,btnTest,btnStudyplane,btnSugsub,btnLater1,btnLater2,btnLater3,btnLater4;
+    ImageView back,imageTimetable,imageDocument,imageMessage,imageResult, btnReport,btnChat, btnEvaluate,imageStudyplane,imageSugsub,imageAnother;
+    Button btnLater1,btnLater2,btnLater3,btnLater4;
     ConstraintLayout logo,logo1;
     TextView txtUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String username = getIntent().getStringExtra("hoTen");
         String role = getIntent().getStringExtra("role");
-        int IDTK = Integer.parseInt(getIntent().getStringExtra("IDTK"));
-
         super.onCreate(savedInstanceState);
         if(role.equals("student")){
             setContentView(R.layout.activity_main_student);
-            sinhVienDAO = new SinhVienDAO(this);
-            getSV = sinhVienDAO.getSV(IDTK);
             getWidgetStudent();
             appStudent();
         }
@@ -67,14 +62,7 @@ public class MainActivity extends AppCompatActivity {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:"));
 
-                try {
-                    startActivity(emailIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    // Handle case where no email app is available
-                }
             }
         });
         btnReport.setOnClickListener(new View.OnClickListener() {
@@ -148,20 +136,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnStudyplane.setOnClickListener(new View.OnClickListener() {
+        imageStudyplane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentStudyplane = new Intent(MainActivity.this, StudyPlan.class);
-                intentStudyplane.putExtra("IDSV",getSV.getID()+"");
                 startActivity(intentStudyplane);
             }
 
         });
-        btnSugsub.setOnClickListener(new View.OnClickListener() {
+        imageSugsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentSugsub = new Intent(MainActivity.this, SuggestedSubjects.class);
-                intentSugsub.putExtra("IDSV",getSV.getID()+"");
+                Intent intentSugsub = new Intent(MainActivity.this, SuggestedSsubjects.class);
                 startActivity(intentSugsub);
             }
         });
@@ -186,18 +172,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentImplicit1);
             }
         });
-        btnPair.setOnClickListener(new View.OnClickListener() {
+        imageAnother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Sms();
             }
         });
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Sms();
-            }
-        });
+
     }
 
     private void getWidgetStudent() {
@@ -207,12 +188,12 @@ public class MainActivity extends AppCompatActivity {
         imageTimetable = findViewById(R.id.imageTimetable);
         imageDocument = findViewById(R.id.imageDocument);
         imageResult = findViewById(R.id.imageResult);
-        btnStudyplane = findViewById(R.id.btnStudyplane);
-        btnSugsub = findViewById(R.id.btnSuggestedsubjects);
+        imageStudyplane = findViewById(R.id.btnStudyplane);
+        imageSugsub = findViewById(R.id.btnSuggestedsubjects);
+        imageAnother = findViewById(R.id.imgAnother);
         logo  = findViewById(R.id.logo);
         logo1  = findViewById(R.id.logo1);
-        btnPair = findViewById(R.id.btnPair);
-        btnTest = findViewById(R.id.btnTest);
+
     }
 
     private void getWidgetTeacher(){
@@ -258,4 +239,5 @@ public class MainActivity extends AppCompatActivity {
     private void Sms() {
         Toast.makeText(MainActivity.this, "Tính năng đang trong quá trình phát triển", Toast.LENGTH_SHORT).show();
     }
+
 }

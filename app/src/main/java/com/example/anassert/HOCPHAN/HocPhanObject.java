@@ -2,7 +2,6 @@ package com.example.anassert.HOCPHAN;
 
 public class HocPhanObject {
 
-    private int ID;
     private int hocKy;
     private String maHP, tenHP, loaiHP,tieuChi;
     private float soTin;
@@ -16,21 +15,9 @@ public class HocPhanObject {
         this.hocKy = hocKy;
     }
 
-    public HocPhanObject(int ID, String maHP, String tenHP, float soTin, String loaiHP, String tieuChi, int hocKy){
-        this.ID = ID;
-        this.maHP = maHP;
-        this.tenHP = tenHP;
-        this.soTin = soTin;
-        this.loaiHP = loaiHP;
-        this.tieuChi = tieuChi;
-        this.hocKy = hocKy;
-    }
-
     public String getTieuChi() {
         return tieuChi;
     }
-
-    public int getID() {return ID;}
 
     public void setTieuChi(String tieuChi) {
         this.tieuChi = tieuChi;
@@ -74,9 +61,5 @@ public class HocPhanObject {
 
     public void setSoTin(float soTin) {
         this.soTin = soTin;
-    }
-
-    public String toString(){
-        return this.ID + this.tenHP;
     }
 }

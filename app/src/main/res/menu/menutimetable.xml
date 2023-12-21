@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_report"
-        android:title="Report"
+        android:title="Báo cáo"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_close"
-        android:title="Close app"
+        android:title="Quay trở lại"
         app:showAsAction="never" />
 </menu>

@@ -66,7 +66,7 @@ public class TaiKhoanDAO {
             String hoTen = cursor.getString(cursor.getColumnIndex("hoTen"));
             String role = cursor.getString(cursor.getColumnIndex("role"));
 
-            TaiKhoanObject user = new TaiKhoanObject(ID,taiKhoan, matKhau, hoTen, role);
+            TaiKhoanObject user = new TaiKhoanObject(taiKhoan, matKhau, hoTen, role);
             cursor.close();
             return user;
         }

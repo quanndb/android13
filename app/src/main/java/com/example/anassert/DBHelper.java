@@ -4,31 +4,25 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
-
 public class DBHelper extends SQLiteOpenHelper {
-
     private Context context;
     static final String dbName = "CoVanVaDieuPhoiHP.db";
-
     static final int dbVersion = 1;
-
     public DBHelper(Context context){
         super(context,dbName,null,dbVersion);
         this.context=context;
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-            createTableTaiKhoan(db);
-            createTableSinhVien(db);
-            createTableHocPhan(db);
-            createTableKH(db);
-            createTableChiTietKH(db);
-            createTableCVHT(db);
-            createtblCVHT_HP(db);
+        createTableTaiKhoan(db);
+        createTableSinhVien(db);
+        createTableHocPhan(db);
+        createTableKH(db);
+        createTableChiTietKH(db);
+        createTableThoiKhoaBieu(db);
+        createTableTaiLieu(db);
+        createTableLuuTruTaiLieu(db);
     }
-
     private void createTableKH(SQLiteDatabase db) {
         try{
             String tblKH = "CREATE TABLE tblKH" +
@@ -42,7 +36,6 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e("Error","There are some problems!");
         }
     }
-
     private void createTableSinhVien(SQLiteDatabase db) {
         try{
             String tblSinhVien = "CREATE TABLE tblSinhVien" +
@@ -104,28 +97,47 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e("Error","There are some problems!");
         }
     }
-
-    //Bảng Cố vấn học tập
-    private void createTableCVHT(SQLiteDatabase db){
+    //Vũ Xuân Điệp table Thời khoá biểu
+    private void createTableThoiKhoaBieu(SQLiteDatabase db){
         try{
-            String tblCVHT = "CREATE TABLE tblCVHT" +
-                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                    "FullName TEXT,"+
-                    "PhoneNumber TEXT,"+
-                    "Email TEXT);";
-            db.execSQL(tblCVHT);
+            String tblThoiKhoaBieu = "CREATE TABLE tblThoiKhoaBieu" +
+                    "(IDTKB INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "monHoc TEXT NOT NULL,"+
+                    "thu DATE NOT NULL,"+
+                    "ngay DATE NOT NULL,"+
+                    "thongTinGiangVien TEXT NOT NULL,"+
+                    "phong TEXT NOT NULL,"+
+                    "diaDiem TEXT NOT NULL,"+
+                    "caHoc TEXT NOT NULL);";
+            db.execSQL(tblThoiKhoaBieu);
         }
         catch (Exception e){
             Log.e("Error","There are some problems!");
         }
     }
-    private void createtblCVHT_HP(SQLiteDatabase db){
+    private void createTableTaiLieu(SQLiteDatabase db){
         try{
-            String tblCvhtHp = "CREATE TABLE tblCvhtHp" +
+            String tblTaiLieu = "CREATE TABLE tblTaiLieu" +
+                    "(IDTL INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "maHP TEXT NOT NULL,"+
+                    "monHoc TEXT NOT NULL,"+
+                    "URL TEXT NOT NULL,"+
+                    "moTa TEXT NOT NULL);";
+            db.execSQL(tblTaiLieu);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
+    private void createTableLuuTruTaiLieu(SQLiteDatabase db){
+        try{
+            String tblLuuTruTaiLieu = "CREATE TABLE tblLuuTruTaiLieu" +
                     "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                    "CvhtID INTEGER,"+
-                    "HpId INTEGER);";
-            db.execSQL(tblCvhtHp);
+                    "maHP TEXT NOT NULL,"+
+                    "monHoc TEXT NOT NULL,"+
+                    "URL TEXT NOT NULL,"+
+                    "ngayLuu DATE NOT NULL);";
+            db.execSQL(tblLuuTruTaiLieu);
         }
         catch (Exception e){
             Log.e("Error","There are some problems!");
@@ -135,6 +147,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS tblTaiKhoan");
+
         onCreate(db);
     }
 

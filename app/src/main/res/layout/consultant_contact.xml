@@ -9,50 +9,26 @@
     android:background="@drawable/main1_button_background"
     android:padding="8dp"
     tools:context="LEMINHKHOI.ConsultantContact">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/main1_button_background"
-        android:text="Gửi email"
-        android:textStyle="bold"
-        android:textSize="24dp"
-        android:textAlignment="center"
-        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email:"
-        android:textSize="24dp"/>
-    <TextView
-        android:id="@+id/txt_email_contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18dp"/>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chủ đề:"
+        android:text="Tiêu đề:"
         android:textSize="24dp"/>
 
     <EditText
-        android:id="@+id/txt_title_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:hint="Nhập tiêu đề"
         android:textSize="18dp"
-        android:text="Kính gửi thầy/cô ....., Em có đôi chút khó khăn trong vấn đề.... Mong thầy/cô hỗ trợ em!" />
+        android:text="Kính gửi thầy/cô Nguyễn Văn A, Em có đôi chút khó khăn trong vấn đề.... Mong thầy/cô hỗ trợ em!" />
 
     <TextView
         android:layout_width="match_parent"
@@ -60,7 +36,7 @@
         android:text="Nội dung: "
         android:textSize="24dp"></TextView>
     <EditText
-        android:id="@+id/txt_description_contact"
+        android:id="@+id/myEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nhập văn bản..."
@@ -72,7 +48,6 @@
         android:layout_height="wrap_content"
         android:gravity="center">
         <Button
-            android:id="@+id/btn_sendEmail_contact"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Gửi!"

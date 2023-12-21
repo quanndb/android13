@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.anassert.DBHelper;
-import com.example.anassert.HOCPHAN.HocPhanObject;
 
 import java.util.ArrayList;
 
@@ -40,14 +39,8 @@ public class ChiTietKHDAO {
         return res;
     }
 
-    public long delete(int idkh){
-        long res = db.delete("tblChiTietKH","IDKH=?",new String[]{String.valueOf(idkh)});
-        if(res == -1 ) return 0;
-        return 1;
-    }
-
-    public long deleteSubject(int idkh,int idhp){
-        long res = db.delete("tblChiTietKH","IDKH=? AND IDHP=?",new String[]{String.valueOf(idkh),String.valueOf(idhp)});
+    public long delete(int id){
+        long res = db.delete("tblChiTietKH","ID=?",new String[]{String.valueOf(id)});
         if(res == -1 ) return 0;
         return 1;
     }
@@ -65,11 +58,10 @@ public class ChiTietKHDAO {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 // Lấy dữ liệu từ cột cần thiết
-                int ID = cursor.getInt(cursor.getColumnIndex("ID"));
                 String addDate = cursor.getString(cursor.getColumnIndex("addDate"));
                 int IDKH = cursor.getInt(cursor.getColumnIndex("IDKH"));
                 int IDHP = cursor.getInt(cursor.getColumnIndex("IDHP"));
-                ChiTietKHObject newChiTietKH = new ChiTietKHObject(ID, addDate,IDKH,IDHP);
+                ChiTietKHObject newChiTietKH = new ChiTietKHObject(addDate,IDKH,IDHP);
                 listChiTietHP.add(newChiTietKH);
                 // Thực hiện xử lý với dữ liệu lấy được
             } while (cursor.moveToNext());

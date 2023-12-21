@@ -12,22 +12,6 @@ public class TaiKhoanObject {
         this.role=role;
     }
 
-    public TaiKhoanObject(int ID,String taiKhoan,String matKhau,String hoTen,String role){
-        this.ID=ID;
-        this.taiKhoan=taiKhoan;
-        this.matKhau=matKhau;
-        this.hoTen=hoTen;
-        this.role=role;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public String getTaiKhoan() {
         return taiKhoan;
     }
@@ -59,5 +43,4 @@ public class TaiKhoanObject {
     public void setRole(String role) {
         this.role = role;
     }
-
 }
