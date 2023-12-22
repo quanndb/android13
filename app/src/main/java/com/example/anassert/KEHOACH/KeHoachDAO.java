@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.anassert.DBHelper;
+import com.example.anassert.HOCPHAN.HocPhanObject;
+import com.example.anassert.TAIKHOAN.TaiKhoanObject;
 
 import java.util.ArrayList;
 
@@ -44,22 +46,22 @@ public class KeHoachDAO {
     }
 
     @SuppressLint("Range")
-    public KeHoachObject getKH (int userID){
+    public KeHoachObject getKH (int idsv){
         ArrayList<KeHoachObject> listKH = new ArrayList<>();
         // Câu truy vấn kiểm tra xem username có tồn tại không
         String query = "SELECT * FROM tblKH WHERE IDSV = ?";
-        String selectionArgs[] = {userID+""};
+        String selectionArgs[] = {idsv+""};
 
         // Thực hiện truy vấn
         Cursor cursor = db.rawQuery(query,selectionArgs);
 
         if (cursor.moveToFirst()) {
             // Truy cập dữ liệu từ Cursor
-
+            int ID = cursor.getInt(cursor.getColumnIndex("ID"));
             String updateDate = cursor.getString(cursor.getColumnIndex("updateDate"));
             int IDSV = cursor.getInt(cursor.getColumnIndex("IDSV"));
 
-            KeHoachObject newKH = new KeHoachObject(updateDate,IDSV);
+            KeHoachObject newKH = new KeHoachObject(ID,updateDate,IDSV);
             cursor.close();
             return newKH;
         }
