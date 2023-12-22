@@ -1,93 +1,88 @@
 package VUXUANDIEP;
 
-
-import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.example.anassert.R;
-import java.util.ArrayList;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class Document extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    TextView txtUrl;
-    private DocumentDAO dao ;
-    private DocumentAdapter adapter;
-    Button btnWatch,btnSave,btnReport;
-    private LinearLayoutManager linearLayoutManager;
-    private ArrayList<DocumentObject> list;
-    private  DocumentAdapter documentAdapter;
-
+    ListView listView,listView1;
+    String tn[]= {"Trí tuệ nhân tạo","Phát triển ứng dụng trên thiết bị di động",
+            "Kiểm thử phần mềm","Thiết kế đồ họa 2D","Phát triển dự án công nghệ thông tin",
+            "Lập trình Java nâng cao","Phát triển ứng dụng Game","Kinh tế chính trị","Mỹ thuật đại cương",
+            "Quản trị mạng trên hệ điều hành Windows"};
+    String dc[]= {"Tư tưởng Hồ Chí Minh","Triết học", "Pháp luật đại cương","Triết học",
+            "Mỹ thuật đại cương", "Thể Chất","Kinh tế chính trị","Tiếng Anh công nghệ thôngtin cơ bản 1"};
+    ArrayAdapter<String> lvAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        //vd4 set back button
-        ActionBar actionBar = getSupportActionBar();
-        String tab = "";
-        for (int i = 0; i < 13; i++) {
-            tab += "\t";
-        }
-        actionBar.setTitle(tab+"Tài liệu tham khảo");
-        recyclerView = findViewById(R.id.recyclerview);
-        linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView .setLayoutManager(linearLayoutManager);
-        dao = new DocumentDAO(this);
-        list = dao.getAll();
-        adapter = new DocumentAdapter(this,list);
-        recyclerView.setAdapter(adapter);
-        /* RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecoration);
-        documentAdapter = new DocumentAdapter(Document.this,List());
-        recyclerView.setAdapter(documentAdapter);*/
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ẩn tiêu đề mặc định của Action Bar
+        app();
+
+    }
+    private void app() {
+        lvAdapter = new ArrayAdapter<>(Document.this, android.R.layout.simple_list_item_1,tn);
+        ListView listView1 = findViewById(R.id.listView1);
+        listView1.setAdapter(lvAdapter);
+        listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder Option = new AlertDialog.Builder(Document.this);
+                Option.setTitle("Có muốn xem tài liệu môn học?");
+                Option.setMessage(tn[position].toString());
+                Option.setPositiveButton("Lưu", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.cancel();
+                    }
+                });
+                Option.setNegativeButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                Option.create().show();
+                return false;
+            }
+        });
+        lvAdapter = new ArrayAdapter<>(Document.this, android.R.layout.simple_list_item_1,dc);
+        ListView listView = findViewById(R.id.listView);
+        listView.setAdapter(lvAdapter);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder Option = new AlertDialog.Builder(Document.this);
+                Option.setTitle("Có muốn xem tài liệu môn học?");
+                Option.setMessage(tn[position].toString());
+                Option.setPositiveButton("Lưu", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        dialogInterface.cancel();
+                    }
+                });
+                Option.setNegativeButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                Option.create().show();
+                return false;
+            }
+        });
     }
 
-    private ArrayList<DocumentObject>Listt(){
-        ArrayList<DocumentObject> list = new ArrayList<>();
-        String subjectid[] = {"LP6010","LP6011","LP6004",
-                "LP6013","LP6012"};
-        String subject[] = {"Triết học","Kinh Tế Chính Trị","Tư tưởng Hồ Chí Minh",
-                "Lịch Sử Đảng cộng sản Việt Nam", "Chủ nghĩa xã hội khoa học"};
-        String url[] ={"https://lps.haui.edu.vn/vn"};
-        String decrible[] = {"Thuộc khoa chính trị - pháp luật"};
-        for(int i = 0;i<subjectid.length;i++) {
-            list.add(new DocumentObject("Mã học phần:"+subjectid[i],"Tên học phần:"+subject[i],url[0],decrible[0]));
-        }
-        //listtb.add(new TimeTable("T2","2/10","Tieng Anh","Thao","508-A9","1,2","C1"));
-
-        return list;
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menudocument,menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id==R.id.action_save) {
-           Intent  save = new Intent(Document.this,SaveDocument.class);
-           startActivity(save);
-            return true;
-        }
-        else if (id==R.id.action_close) {
-            finish();
-            return true;
-        }
-        else
-            return super.onOptionsItemSelected(item);
-    }
 }
