@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.anassert.ChiTietKH.ChiTietKHObject;
 import com.example.anassert.DBHelper;
 
 import java.util.ArrayList;

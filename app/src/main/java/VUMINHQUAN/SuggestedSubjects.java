@@ -1,13 +1,15 @@
 package VUMINHQUAN;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,9 +27,9 @@ import android.widget.Toast;
 
 import com.example.anassert.ChiTietKH.ChiTietKHDAO;
 import com.example.anassert.ChiTietKH.ChiTietKHObject;
-import com.example.anassert.HOCPHAN.HocPhanDAO;
-import com.example.anassert.HOCPHAN.HocPhanObject;
-import com.example.anassert.KEHOACH.KeHoachDAO;
+import com.example.anassert.HocPhan.HocPhanDAO;
+import com.example.anassert.HocPhan.HocPhanObject;
+import com.example.anassert.KeHoach.KeHoachDAO;
 import com.example.anassert.R;
 
 import java.time.LocalDate;
@@ -41,6 +44,8 @@ public class SuggestedSubjects extends AppCompatActivity {
     ArrayAdapter<String> lvAdapter;
     ArrayAdapter<String> targetAdapter;
     Spinner sp;
+    private ImageButton cancelButton;
+    private Button ok_btn;
     Button btnTarget,btnUse;
     TextView txtTarget;
     ListView lv;
@@ -51,7 +56,12 @@ public class SuggestedSubjects extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suggestedsubjects);
+        setContentView(R.layout.activity_suggested_subjects);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        //vd4 set back button
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Đề xuất môn học");
         getWidget();
         define();
         app();
@@ -93,21 +103,21 @@ public class SuggestedSubjects extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh1);
+                lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh1);
                 lv.setAdapter(lvAdapter);
             }
         });
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Tạo một Builder để xây dựng AlertDialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(SuggestedSubjects.this);
                 builder.setTitle("Thông tin của học phần");
 
                 // Inflate layout tùy chỉnh cho AlertDialog
                 LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.customdetail, null);
+                View dialogView = inflater.inflate(R.layout.custom_detail, null);
                 builder.setView(dialogView);
                 TextView txtMaHP, txtTenHP, txtSoTin, txtLoaiHP, txtHocKy;
                 txtMaHP = dialogView.findViewById(R.id.textViewDisplayMaHocPhan);
@@ -134,13 +144,12 @@ public class SuggestedSubjects extends AppCompatActivity {
 
                     public void onClick(DialogInterface dialog, int which) {
 
-                       dialog.cancel();
+                        dialog.cancel();
                     }
                 });
                 // Tạo và hiển thị AlertDialog
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-                return false;
             }
         });
 
@@ -163,7 +172,7 @@ public class SuggestedSubjects extends AppCompatActivity {
 
                 // Inflate layout tùy chỉnh cho AlertDialog
                 LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.customlayout, null);
+                View dialogView = inflater.inflate(R.layout.custom_layout, null);
                 builder.setView(dialogView);
 
                 // Lấy tham chiếu đến Spinner trong layout tùy chỉnh
@@ -291,14 +300,14 @@ public class SuggestedSubjects extends AppCompatActivity {
     }
 
     private void changeLV(int position){
-        if(position==0) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh1);
-        if(position==1) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh2);
-        if(position==2) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh3);
-        if(position==3) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh4);
-        if(position==4) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh5);
-        if(position==5) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh6);
-        if(position==6) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh7);
-        if(position==7) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.customlvsgs,mh8);
+        if(position==0) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh1);
+        if(position==1) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh2);
+        if(position==2) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh3);
+        if(position==3) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh4);
+        if(position==4) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh5);
+        if(position==5) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh6);
+        if(position==6) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh7);
+        if(position==7) lvAdapter = new MyAdapterSGS(SuggestedSubjects.this,R.layout.custom_lv_sgs,mh8);
         lv.setAdapter(lvAdapter);
     }
 
@@ -312,24 +321,42 @@ public class SuggestedSubjects extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_timetable,menu);
+        return true;
     }
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        View alertCustomDialog = LayoutInflater.from(SuggestedSubjects.this).inflate(R.layout.custom_dialog,null);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(SuggestedSubjects.this);
+
+        alertDialog.setView(alertCustomDialog);
+        cancelButton = (ImageButton) alertCustomDialog.findViewById(R.id.cancelID);
+        ok_btn = (Button) alertCustomDialog.findViewById(R.id.ok_btn_id);
+        final  AlertDialog dialog = alertDialog.create();
         int id = item.getItemId();
-        if (id == R.id.btnBack) {
-            back();
-        }if (id == R.id.btnPlan) {
-            plan();
+        if (id==R.id.action_report) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                }
+            });
+            ok_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                    Toast.makeText(SuggestedSubjects.this, "Cảm ơn bạn đã phản hồi.Báo cáo đã được gửi đến nhà phát triển.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return true;
         }
-        return super.onOptionsItemSelected(item);
-    }
-    private void plan() {
-        Intent plan = new Intent(this, StudyPlan.class);
-        startActivity(plan);
-    }
-    private void back() {
-        finish();
+        else if (id==R.id.action_close) {
+            finish();
+            return true;
+        }
+        else
+            return super.onOptionsItemSelected(item);
     }
 }

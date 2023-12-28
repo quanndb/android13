@@ -7,14 +7,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="5"
-        android:layout_marginBottom="16dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
         <ImageView
             android:id="@+id/image_message"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:src="@drawable/user"
-            android:layout_weight="1"
-            ></ImageView>
+            android:layout_weight="1">
+        </ImageView>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,10 +24,12 @@
             android:layout_weight="4">
             <TextView
                 android:id="@+id/txt_fullNameMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Ts. Nguyễn Văn A"
-                android:textSize="18dp"></TextView>
+                android:textSize="18dp">
+
+            </TextView>
 
             <TextView
                 android:id="@+id/txt_phoneNumberMessage"
@@ -39,7 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="VanA@gmail.edu.com"
-                android:textSize="14dp"></TextView>
+                android:textSize="14dp">
+            </TextView>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

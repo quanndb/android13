@@ -27,6 +27,12 @@ public class DBHelper extends SQLiteOpenHelper {
             createTableChiTietKH(db);
             createTableCVHT(db);
             createtblCVHT_HP(db);
+            createTableThoiKhoaBieu(db);
+            createTableTaiLieu(db);
+            createTableLuuTruTaiLieu(db);
+            //
+            createTableMonDangKy(db);
+        createtableDiemThanhPhan(db);
     }
 
     private void createTableKH(SQLiteDatabase db) {
@@ -126,6 +132,93 @@ public class DBHelper extends SQLiteOpenHelper {
                     "CvhtID INTEGER,"+
                     "HpId INTEGER);";
             db.execSQL(tblCvhtHp);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
+
+    //Vũ Xuân Điệp table Thời khoá biểu
+    private void createTableThoiKhoaBieu(SQLiteDatabase db){
+        try{
+            String tblThoiKhoaBieu = "CREATE TABLE tblThoiKhoaBieu" +
+                    "(IDTKB INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "monHoc TEXT NOT NULL,"+
+                    "thu DATE NOT NULL,"+
+                    "ngay DATE NOT NULL,"+
+                    "thongTinGiangVien TEXT NOT NULL,"+
+                    "phong TEXT NOT NULL,"+
+                    "diaDiem TEXT NOT NULL,"+
+                    "caHoc TEXT NOT NULL);";
+            db.execSQL(tblThoiKhoaBieu);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
+    private void createTableTaiLieu(SQLiteDatabase db){
+        try{
+            String tblTaiLieu = "CREATE TABLE tblTaiLieu" +
+                    "(IDTL INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "maHP TEXT NOT NULL,"+
+                    "monHoc TEXT NOT NULL,"+
+                    "URL TEXT NOT NULL,"+
+                    "moTa TEXT NOT NULL);";
+            db.execSQL(tblTaiLieu);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
+    private void createTableLuuTruTaiLieu(SQLiteDatabase db){
+        try{
+            String tblLuuTruTaiLieu = "CREATE TABLE tblLuuTruTaiLieu" +
+                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "maHP TEXT NOT NULL,"+
+                    "monHoc TEXT NOT NULL,"+
+                    "URL TEXT NOT NULL,"+
+                    "ngayLuu DATE NOT NULL);";
+            db.execSQL(tblLuuTruTaiLieu);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
+    ///BuiTienDung
+    private void createTableMonDangKy(SQLiteDatabase db){
+        try{
+            String createtableMonDangKy= "CREATE TABLE tblMonDangKy ("+
+                    "maMonDangKy text primary key,"+
+                    "tenMonDangKy text,"+
+                    "trangThai text,"+
+                    "diemTongKetChu text,"+
+                    "diemTongKetSo float,"+
+                    "kyHoc float,"+
+                    "danhGiaHP text,"+
+                    "tinChiLyThuyet float,"+
+                    "tinChiThucHanh float,"+
+                    "tinChi float,"+
+                    "phanTramTietNghi text,"+
+                    "idSinhVien integer REFERENCES tblSinhVien(ID),"+
+                    "maLopMonHoc text"+
+                    ")";
+            db.execSQL(createtableMonDangKy);
+        }
+        catch (Exception e){
+            Log.e("Error","There are some problems!");
+        }
+    }
+    private void createtableDiemThanhPhan(SQLiteDatabase db){
+        try{
+            String createtableDiemThanhPhan= "CREATE TABLE tblDiemThanhPhan ("+
+                    "maDiemThanhPhan text primary key,"+
+                    "diemTX1 float,"+
+                    "diemTX2 float,"+
+                    "diemGiuaKy float,"+
+                    "diemCuoiKy float,"+
+                    "maMonDangKy text REFERENCES tblMonDangKy(maMonDangKy)"+
+                    ")";
+            db.execSQL(createtableDiemThanhPhan);
         }
         catch (Exception e){
             Log.e("Error","There are some problems!");

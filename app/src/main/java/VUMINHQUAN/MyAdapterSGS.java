@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.anassert.HOCPHAN.HocPhanObject;
+import com.example.anassert.HocPhan.HocPhanObject;
 import com.example.anassert.R;
 
 import java.util.ArrayList;

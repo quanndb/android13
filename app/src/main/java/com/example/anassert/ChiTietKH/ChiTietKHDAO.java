@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.anassert.DBHelper;
-import com.example.anassert.HOCPHAN.HocPhanObject;
 
 import java.util.ArrayList;
 

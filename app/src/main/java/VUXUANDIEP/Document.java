@@ -1,88 +1,96 @@
 package VUXUANDIEP;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anassert.R;
+import com.example.anassert.TaiLieu.DocumentDAO;
+import com.example.anassert.TaiLieu.DocumentObject;
+
+import java.util.ArrayList;
 
 public class Document extends AppCompatActivity {
-    ListView listView,listView1;
-    String tn[]= {"Trí tuệ nhân tạo","Phát triển ứng dụng trên thiết bị di động",
-            "Kiểm thử phần mềm","Thiết kế đồ họa 2D","Phát triển dự án công nghệ thông tin",
-            "Lập trình Java nâng cao","Phát triển ứng dụng Game","Kinh tế chính trị","Mỹ thuật đại cương",
-            "Quản trị mạng trên hệ điều hành Windows"};
-    String dc[]= {"Tư tưởng Hồ Chí Minh","Triết học", "Pháp luật đại cương","Triết học",
-            "Mỹ thuật đại cương", "Thể Chất","Kinh tế chính trị","Tiếng Anh công nghệ thôngtin cơ bản 1"};
-    ArrayAdapter<String> lvAdapter;
+
+    private RecyclerView recyclerView;
+    private DocumentDAO dao ;
+    private DocumentAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
+    private ArrayList<DocumentObject> list;
+    private SearchView searchView;
+    private  DocumentAdapter documentAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ẩn tiêu đề mặc định của Action Bar
-        app();
-
-    }
-    private void app() {
-        lvAdapter = new ArrayAdapter<>(Document.this, android.R.layout.simple_list_item_1,tn);
-        ListView listView1 = findViewById(R.id.listView1);
-        listView1.setAdapter(lvAdapter);
-        listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        //vd4 set back button
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Tài liệu tham khảo");
+        recyclerView = findViewById(R.id.recyclerview);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView .setLayoutManager(linearLayoutManager);
+        dao = new DocumentDAO(this);
+        list = dao.getAll();
+        searchView=findViewById(R.id.searchPerson);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder Option = new AlertDialog.Builder(Document.this);
-                Option.setTitle("Có muốn xem tài liệu môn học?");
-                Option.setMessage(tn[position].toString());
-                Option.setPositiveButton("Lưu", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        dialogInterface.cancel();
-                    }
-                });
-                Option.setNegativeButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                Option.create().show();
+            public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-        });
-        lvAdapter = new ArrayAdapter<>(Document.this, android.R.layout.simple_list_item_1,dc);
-        ListView listView = findViewById(R.id.listView);
-        listView.setAdapter(lvAdapter);
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder Option = new AlertDialog.Builder(Document.this);
-                Option.setTitle("Có muốn xem tài liệu môn học?");
-                Option.setMessage(tn[position].toString());
-                Option.setPositiveButton("Lưu", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        dialogInterface.cancel();
-                    }
-                });
-                Option.setNegativeButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                Option.create().show();
-                return false;
+            public boolean onQueryTextChange(String newText) {
+                search(newText);
+                return true;
             }
         });
+        adapter = new DocumentAdapter(this,list);
+        recyclerView.setAdapter(adapter);
+    }
+    private void search(String query) {
+        ArrayList<DocumentObject> filteredList = new ArrayList<>();
+        for (DocumentObject document : list) {
+            if (document.getMonHoc().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(document);
+            }
+        }
+        adapter.setFilteredList(filteredList);
     }
 
+    public boolean onQueryTextChange(String newText) {
+        search(newText);
+        return true;
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_document,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==R.id.action_save) {
+           Intent  save = new Intent(Document.this,SaveDocument.class);
+           startActivity(save);
+            return true;
+        }
+        else if (id==R.id.action_close) {
+            finish();
+            return true;
+        }
+        else
+            return super.onOptionsItemSelected(item);
+    }
 }
